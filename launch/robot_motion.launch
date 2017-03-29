@@ -1,0 +1,35 @@
+<launch>
+ 
+ 
+  <!-- Load Robot and Setup -->
+  <include file="$(find omnirob_description)/launch/omnirob_lbr_sdh2_extended.launch"> 
+		   <arg name="start_rviz_display" value="false"/>
+  </include>
+  
+  <!-- Specify planning group -->
+  <arg name="planning_group" 	default="omnirob_base"/>  
+  <!-- Name of configuration files for planning and execution -->
+  <arg name="planning_config" 	default="planner_parameters_omnirob"/>
+  <arg name="execution_config" 	default="execution_config_real_omnirob"/>
+ 
+  <!-- Planners to activate -->
+  <arg name="start_uni_planner" default="false"/>
+  <arg name="start_bi_planner" 	default="true"/>
+  
+  <!-- Name of configuration files for planning and execution -->
+  <include file="$(find planning_server)/launch/planning_server.launch"> 
+	<arg name="planning_config" 	value="$(arg planning_config)" />
+	<arg name="planning_group" 		value="$(arg planning_group)"/>
+	<arg name="start_uni_planner" 	value="$(arg start_uni_planner)"/>
+    <arg name="start_bi_planner" 	value="$(arg start_bi_planner)"/>
+  </include> 
+  
+  <include file="$(find execution_server)/launch/execution_server.launch"> 
+	<arg name="execution_config" 	value="$(arg execution_config)" />
+	<arg name="planning_group" 		value="$(arg planning_group)"/>
+  </include>  
+  
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find robot_motion_examples)/robot_motion_rviz.rviz" />
+ 
+ 
+</launch>

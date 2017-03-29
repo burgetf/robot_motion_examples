@@ -1,0 +1,12 @@
+*.settings/ 
+.*project 
+*.backup 
+*.pyc 
+*~ 
+
+**/data 
+**/tmp 
+**/build 
+**/CMakeLists.txt.user 
+**/doc
+
